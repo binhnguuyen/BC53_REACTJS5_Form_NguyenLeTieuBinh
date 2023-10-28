@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { btFormActions } from '../store/BTForm/slice';
 
 export const ProductForm = () => {
+    const dispatch = useDispatch();
+
     // lấy dữ liệu từ form về thì đặt state
     const [formValue, setFormValue] = useState({
         id: "",
@@ -31,6 +35,7 @@ export const ProductForm = () => {
             [name]: e.target.value,
         })
     }
+
     return (
         // ở đây đặt là form, button đặt trong form nếu ko có type thì mặc định là submit
         // button có type là submit thì khi click vào sẽ chạy vào hàm onSubmit của form
@@ -67,8 +72,16 @@ export const ProductForm = () => {
                 </div>
             </div>
             <div className='mt-3'>
-                <button className='btn btn-primary'>Create</button>
-                <button className='btn btn-success ms-3'>Update</button>
+                <button className='btn btn-primary'
+                    onClick={() => {
+                        dispatch(btFormActions.addProduct(formValue))
+                    }}
+                >
+                    Create
+                </button>
+                <button className='btn btn-success ms-3'>
+                    Update
+                </button>
             </div>
         </form>
     )
