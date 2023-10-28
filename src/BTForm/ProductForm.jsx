@@ -2,7 +2,9 @@ import React from 'react'
 
 export const ProductForm = () => {
     return (
-        <div>
+        // ở đây đặt là form, button đặt trong form nếu ko có type thì mặc định là submit
+        // button có type là submit thì khi click vào sẽ chạy vào hàm onSubmit của form
+        <form>
             <div className="row">
                 <h2 className='p-3 bg-dark text-white'>Thông tin sinh viên</h2>
                 <div className='col-6'>
@@ -26,6 +28,10 @@ export const ProductForm = () => {
                     </div>
                 </div>
             </div>
-        </div>
+            <div className='mt-3'>
+                <button className='btn btn-primary'>Create</button>
+                <button className='btn btn-success ms-3'>Update</button>
+            </div>
+        </form>
     )
 }
