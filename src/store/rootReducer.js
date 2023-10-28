@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { btFormReducer } from "./slice";
+import { btFormReducer } from "./BTForm/slice";
 
 export const rootReducer = combineReducers({
     btForm: btFormReducer,
