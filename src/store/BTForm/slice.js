@@ -18,6 +18,11 @@ const BTFormSlice = createSlice({
             const { payload } = action;
             // payload ở delete chính là id luôn
             state.productList = state.productList.filter((value) => value.id !== payload);
+        },
+        editProduct: (state, action) => {
+            const { payload } = action;
+            console.log('payload: ', payload);
+            state.productEdit = payload;
         }
     }
 })

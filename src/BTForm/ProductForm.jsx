@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { btFormActions } from '../store/BTForm/slice';
 
 export const ProductForm = () => {
@@ -36,6 +36,10 @@ export const ProductForm = () => {
         })
     }
 
+    // lấy productEdit từ store về
+    const { productEdit } = useSelector(state => state.btForm)
+    // console.log('productEdit: ', productEdit);
+
     return (
         // ở đây đặt là form, button đặt trong form nếu ko có type thì mặc định là submit.
         // button có type là submit thì khi click vào sẽ chạy vào hàm onSubmit của form.
@@ -58,12 +62,16 @@ export const ProductForm = () => {
                     <label htmlFor="">Mã sinh viên</label>
                     <input type="text" name="" id="" className="form-control"
                         onChange={handelFormValue("id")}
+                        // gán giá trị của productEdit khi ấn nút edit
+                        // dấu ? là do ban đầu khi chưa ấn edit nó sẽ là undefined, cứ vậy mà chấm tới thuộc tính nó sẽ lỗi
+                        value={productEdit?.id} 
                     />
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Số điện thoại</label>
                     <input type="tel" name="" id="" className="form-control"
                         onChange={handelFormValue("phone")}
+                        value={productEdit?.phone} 
                     />
                 </div>
             </div>
@@ -72,12 +80,14 @@ export const ProductForm = () => {
                     <label htmlFor="">Họ tên</label>
                     <input type="text" name="" id="" className="form-control"
                         onChange={handelFormValue("name")}
+                        value={productEdit?.name} 
                     />
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Email</label>
                     <input type="email" name="" id="" className="form-control"
                         onChange={handelFormValue("mail")}
+                        value={productEdit?.mail} 
                     />
                 </div>
             </div>
