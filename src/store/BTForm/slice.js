@@ -1,7 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    productList: [],
+    productList: [
+        {
+            id: "1",
+            name: "Nguyễn Văn A",
+            phone: "09721987941",
+            mail: "leechiupin@gmail.com",
+        },
+        {
+            id: "2",
+            name: "Nguyễn Văn B",
+            phone: "09721987941",
+            mail: "leechiupin@gmail.com",
+        },
+        {
+            id: "3",
+            name: "Nguyễn Văn C",
+            phone: "09721987941",
+            mail: "leechiupin@gmail.com",
+        },
+    ],
     productEdit: [],
 }
 
