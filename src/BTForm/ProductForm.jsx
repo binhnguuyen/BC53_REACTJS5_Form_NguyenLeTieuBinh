@@ -47,6 +47,9 @@ export const ProductForm = () => {
                 // console.log('event: ', event);
                 // ngăn sự kiện reload của browser khi submit
                 event.preventDefault()
+
+                // do mình ko có type trong các button nên sẽ chạy vào trong onSubmit này và chạy tính năng của mình
+                dispatch(btFormActions.addProduct(formValue))
             }}
         >
             <h2 className='p-3 bg-dark text-white'>Thông tin sinh viên</h2>
@@ -81,9 +84,9 @@ export const ProductForm = () => {
 
             <div className='mt-3'>
                 <button className='btn btn-primary'
-                    onClick={() => {
-                        dispatch(btFormActions.addProduct(formValue))
-                    }}
+                    // onClick={() => {
+                    //     dispatch(btFormActions.addProduct(formValue))
+                    // }}
                 >
                     Create
                 </button>
@@ -92,6 +95,9 @@ export const ProductForm = () => {
                 </button>
             </div>
         </form>
+
+        // ví dụ nút ngoài form thì DOM tới ID của form
+        // <button form="btForm">Submit</button>
 
     )
 }
