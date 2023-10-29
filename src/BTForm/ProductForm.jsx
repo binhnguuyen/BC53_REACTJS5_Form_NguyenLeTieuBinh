@@ -121,16 +121,22 @@ export const ProductForm = () => {
             </div>
 
             <div className='mt-3'>
-                <button className='btn btn-primary'
-                // onClick={() => {
-                //     dispatch(btFormActions.addProduct(formValue))
-                // }}
-                >
-                    Create
-                </button>
-                <button className='btn btn-success ms-3'>
-                    Update
-                </button>
+                {/* chỗ này muốn là nếu có giá trị productEdit thì chỉ hiển thị nút Update */}
+                {/* nếu ko có thì hiện nút Create */}
+                {
+                    productEdit ?
+                        (<button className='btn btn-success ms-3'>
+                            Update
+                        </button>)
+                        :
+                        (<button className='btn btn-primary'
+                        // onClick={() => {
+                        //     dispatch(btFormActions.addProduct(formValue))
+                        // }}
+                        >
+                            Create
+                        </button>)
+                }
             </div>
         </form>
 
