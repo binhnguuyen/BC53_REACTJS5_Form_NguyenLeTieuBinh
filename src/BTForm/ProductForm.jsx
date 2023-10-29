@@ -20,7 +20,7 @@ export const ProductForm = () => {
 
     // tạo 1 state mới quản lý validation
     const [formError, setFormError] = useState({
-        id: "Vui lòng nhập thông tin",
+        id: "",
         name: "",
         phone: "",
         mail: "",
@@ -42,6 +42,13 @@ export const ProductForm = () => {
     // hàm currying funtion trả về 1 cái hàm khác
     // cách viết tắt bỏ return
     const handelFormValue = (name) => (e) => {
+        // kiểm tra dữ liệu đầu vào
+        // name ở đây là: id, name, phone, mail
+        if ( e.target.value === "" ) {
+            setFormError({...formError, [name]: "Vui lòng nhập thông tin"})
+        }
+
+        // kiểm tra xong rồi thì setForm
         setFormValue({
             ...formValue,
             [name]: e.target.value,
