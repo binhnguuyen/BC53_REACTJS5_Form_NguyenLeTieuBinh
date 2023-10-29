@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { btFormActions } from '../store/BTForm/slice';
 
 export const ProductForm = () => {
     const dispatch = useDispatch();
+
+    // lấy productEdit từ store về
+    const { productEdit } = useSelector(state => state.btForm)
+    console.log('productEdit: ', productEdit);
 
     // lấy dữ liệu từ form về thì đặt state
     const [formValue, setFormValue] = useState({
@@ -36,9 +40,18 @@ export const ProductForm = () => {
         })
     }
 
-    // lấy productEdit từ store về
-    const { productEdit } = useSelector(state => state.btForm)
-    // console.log('productEdit: ', productEdit);
+    
+    // useEffect cũng là 1 hook của React giống như useState
+    // cứ mỗi lần productEdit thay đổi thì callback serFromValue sẽ chạy lại (TH3 trong demo)
+    // dùng useEffect ngay đây sẽ giúp sữa lỗi dù mình có sửa giá trị của productEdit đc render ra UI thì giá trị render ra UI cũng ko bị thay đổi
+    useEffect(() => {
+        // do lần đầu render nó vẫn chạy, nên mình cần xét if ngay đây để xem nó có ko
+        if (productEdit) {
+            // console.log('productEdit: ', productEdit);
+            // set form trên UI lại mỗi khi productEdit thay đổi
+            setFormValue(productEdit)
+        }
+    }, [productEdit])
 
     return (
         // ở đây đặt là form, button đặt trong form nếu ko có type thì mặc định là submit.
@@ -64,14 +77,17 @@ export const ProductForm = () => {
                         onChange={handelFormValue("id")}
                         // gán giá trị của productEdit khi ấn nút edit
                         // dấu ? là do ban đầu khi chưa ấn edit nó sẽ là undefined, cứ vậy mà chấm tới thuộc tính nó sẽ lỗi
-                        value={productEdit?.id} 
+                        // value={productEdit?.id}
+                        // do mình đã useEffect ở trên rồi nên ngay đây mình sẽ ko lấy giá trị từ productEdit nữa mà lấy trực tiếp từ formValue, vì mình sửa là sửa giá trị trong ô input của formValue chứ ko phải giá trị của productEdit
+                        value={formValue.id}
                     />
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Số điện thoại</label>
                     <input type="tel" name="" id="" className="form-control"
                         onChange={handelFormValue("phone")}
-                        value={productEdit?.phone} 
+                        // value={productEdit?.phone}
+                        value={formValue.phone}
                     />
                 </div>
             </div>
@@ -80,23 +96,25 @@ export const ProductForm = () => {
                     <label htmlFor="">Họ tên</label>
                     <input type="text" name="" id="" className="form-control"
                         onChange={handelFormValue("name")}
-                        value={productEdit?.name} 
+                        // value={productEdit?.name}
+                        value={formValue.name}
                     />
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Email</label>
                     <input type="email" name="" id="" className="form-control"
                         onChange={handelFormValue("mail")}
-                        value={productEdit?.mail} 
+                        // value={productEdit?.mail}
+                        value={formValue.mail}
                     />
                 </div>
             </div>
 
             <div className='mt-3'>
                 <button className='btn btn-primary'
-                    // onClick={() => {
-                    //     dispatch(btFormActions.addProduct(formValue))
-                    // }}
+                // onClick={() => {
+                //     dispatch(btFormActions.addProduct(formValue))
+                // }}
                 >
                     Create
                 </button>

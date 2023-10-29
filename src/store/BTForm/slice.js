@@ -21,7 +21,6 @@ const BTFormSlice = createSlice({
         },
         editProduct: (state, action) => {
             const { payload } = action;
-            console.log('payload: ', payload);
             state.productEdit = payload;
         }
     }
