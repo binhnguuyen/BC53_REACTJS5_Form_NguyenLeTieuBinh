@@ -21,7 +21,7 @@ const initialState = {
             mail: "leechiupin@gmail.com",
         },
     ],
-    productEdit: [],
+    productEdit: undefined,
 }
 
 const BTFormSlice = createSlice({
