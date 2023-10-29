@@ -96,6 +96,9 @@ export const ProductForm = () => {
                         // ko cho sửa id nên mình so sánh nếu bằng thì disable
                         disabled={productEdit?.id && formValue.id === productEdit?.id}
                     />
+                    <p>
+                        <small className='text-danger'>Vui lòng nhập thông tin</small>
+                    </p>
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Số điện thoại</label>
@@ -104,6 +107,9 @@ export const ProductForm = () => {
                         // value={productEdit?.phone}
                         value={formValue.phone}
                     />
+                    <p>
+                        <small className='text-danger'>Vui lòng nhập thông tin</small>
+                    </p>
                 </div>
             </div>
             <div className='col-6'>
@@ -114,6 +120,9 @@ export const ProductForm = () => {
                         // value={productEdit?.name}
                         value={formValue.name}
                     />
+                    <p>
+                        <small className='text-danger'>Vui lòng nhập thông tin</small>
+                    </p>
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Email</label>
@@ -122,6 +131,9 @@ export const ProductForm = () => {
                         // value={productEdit?.mail}
                         value={formValue.mail}
                     />
+                    <p>
+                        <small className='text-danger'>Vui lòng nhập thông tin</small>
+                    </p>
                 </div>
             </div>
 
