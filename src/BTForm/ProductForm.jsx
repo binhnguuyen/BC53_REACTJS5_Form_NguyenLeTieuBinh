@@ -66,7 +66,12 @@ export const ProductForm = () => {
                 event.preventDefault()
 
                 // do mình ko có type trong các button nên sẽ chạy vào trong onSubmit này và chạy tính năng của mình
-                dispatch(btFormActions.addProduct(formValue))
+                if (productEdit) {
+                    dispatch(btFormActions.updateProduct(formValue))
+                }
+                else {
+                    dispatch(btFormActions.addProduct(formValue))
+                }
 
                 // setFormValue lại để làm trống các ô input sau khi thêm sp
                 setFormValue({
@@ -125,7 +130,7 @@ export const ProductForm = () => {
                 {/* nếu ko có thì hiện nút Create */}
                 {
                     productEdit ?
-                        (<button className='btn btn-success ms-3'>
+                        (<button className='btn btn-success'>
                             Update
                         </button>)
                         :

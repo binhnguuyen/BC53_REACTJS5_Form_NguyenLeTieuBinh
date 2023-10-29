@@ -29,8 +29,9 @@ const BTFormSlice = createSlice({
     initialState,
     reducers: {
         addProduct: (state, action) => {
-            const stateProductList = state.productList;
+            // bóc tách payload trong action ra
             const { payload } = action;
+            const stateProductList = state.productList;
             stateProductList.push(payload);
         },
         deleteProduct: (state, action) => {
@@ -41,6 +42,25 @@ const BTFormSlice = createSlice({
         editProduct: (state, action) => {
             const { payload } = action;
             state.productEdit = payload;
+        },
+        updateProduct: (state, action) => {
+            const { payload } = action;
+            // console.log('payload: ', payload);
+
+            // tìm trong productList thằng nào có id giống id của productEdit vừa truyền lên
+            const productIndex = state.productList.findIndex((item) => item.id === payload.id);
+
+            // khi ko tìm thấy sp dựa vào id thì productIndex sẽ bằng -1
+            // tốt nhất là nên thêm đk, vì lỡ có ai đó biết code vô vô hiệu hoá cái lệnh disable id thì họ sẽ sửa id đc, nên phải thêm vào đk này
+            // nếu tìm thấy
+            if (productIndex !== -1){
+                console.log('productIndex: ', productIndex);
+                state.productList[productIndex] = payload;
+
+                // clear nó để nó ko ăn những đk ngoài luồng
+                state.productEdit = undefined;
+            }
+
         }
     }
 })
