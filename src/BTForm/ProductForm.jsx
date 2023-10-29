@@ -16,7 +16,15 @@ export const ProductForm = () => {
         phone: "",
         mail: "",
     })
-    console.log('formValue: ', formValue);
+    // console.log('formValue: ', formValue);
+
+    // tạo 1 state mới quản lý validation
+    const [formError, setFormError] = useState({
+        id: "Vui lòng nhập thông tin",
+        name: "",
+        phone: "",
+        mail: "",
+    })
 
     // để lấy dữ liệu trên ô input cần thêm onChange.
     // mỗi sự kiện trong JS đề trả về 1 biến event.
@@ -96,9 +104,13 @@ export const ProductForm = () => {
                         // ko cho sửa id nên mình so sánh nếu bằng thì disable
                         disabled={productEdit?.id && formValue.id === productEdit?.id}
                     />
-                    <p>
-                        <small className='text-danger'>Vui lòng nhập thông tin</small>
-                    </p>
+                    {formError.id && (
+                        <p>
+                            <small className='text-danger'>{formError.id}</small>
+                        </p>
+                    )
+                    }
+
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Số điện thoại</label>
@@ -107,9 +119,12 @@ export const ProductForm = () => {
                         // value={productEdit?.phone}
                         value={formValue.phone}
                     />
-                    <p>
-                        <small className='text-danger'>Vui lòng nhập thông tin</small>
-                    </p>
+                    {formError.phone && (
+                        <p>
+                            <small className='text-danger'>{formError.phone}</small>
+                        </p>
+                    )}
+
                 </div>
             </div>
             <div className='col-6'>
@@ -120,9 +135,12 @@ export const ProductForm = () => {
                         // value={productEdit?.name}
                         value={formValue.name}
                     />
-                    <p>
-                        <small className='text-danger'>Vui lòng nhập thông tin</small>
-                    </p>
+                    {formError.name && (
+                        <p>
+                            <small className='text-danger'>{formError.name}</small>
+                        </p>
+                    )}
+
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Email</label>
@@ -131,9 +149,11 @@ export const ProductForm = () => {
                         // value={productEdit?.mail}
                         value={formValue.mail}
                     />
-                    <p>
-                        <small className='text-danger'>Vui lòng nhập thông tin</small>
-                    </p>
+                    {formError.mail && (
+                        <p>
+                            <small className='text-danger'>{formError.mail}</small>
+                        </p>
+                    )}
                 </div>
             </div>
 
