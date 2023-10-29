@@ -40,7 +40,7 @@ export const ProductForm = () => {
         })
     }
 
-    
+
     // useEffect cũng là 1 hook của React giống như useState
     // cứ mỗi lần productEdit thay đổi thì callback serFromValue sẽ chạy lại (TH3 trong demo)
     // dùng useEffect ngay đây sẽ giúp sữa lỗi dù mình có sửa giá trị của productEdit đc render ra UI thì giá trị render ra UI cũng ko bị thay đổi
@@ -67,6 +67,14 @@ export const ProductForm = () => {
 
                 // do mình ko có type trong các button nên sẽ chạy vào trong onSubmit này và chạy tính năng của mình
                 dispatch(btFormActions.addProduct(formValue))
+
+                // setFormValue lại để làm trống các ô input sau khi thêm sp
+                setFormValue({
+                    id: "",
+                    name: "",
+                    phone: "",
+                    mail: "",
+                })
             }}
         >
             <h2 className='p-3 bg-dark text-white'>Thông tin sinh viên</h2>
