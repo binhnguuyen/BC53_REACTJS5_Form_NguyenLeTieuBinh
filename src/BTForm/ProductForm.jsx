@@ -89,7 +89,7 @@ export const ProductForm = () => {
                         // do mình đã useEffect ở trên rồi nên ngay đây mình sẽ ko lấy giá trị từ productEdit nữa mà lấy trực tiếp từ formValue, vì mình sửa là sửa giá trị trong ô input của formValue chứ ko phải giá trị của productEdit
                         value={formValue.id}
                         // ko cho sửa id nên mình so sánh nếu bằng thì disable
-                        disabled={formValue.id === productEdit.id}
+                        disabled={formValue.id === productEdit?.id}
                     />
                 </div>
                 <div className='mt-3'>
