@@ -14,8 +14,8 @@ export const ProductForm = () => {
     })
     console.log('formValue: ', formValue);
 
-    // để lấy dữ liệu trên ô input cần thêm onChange
-    // mỗi sự kiện trong JS đề trả về 1 biến event
+    // để lấy dữ liệu trên ô input cần thêm onChange.
+    // mỗi sự kiện trong JS đề trả về 1 biến event.
     // const handelFormValue = (e, name) => {
     //     // e là event, name là cái tên của thuộc tính
     //     setFormValue({
@@ -30,47 +30,55 @@ export const ProductForm = () => {
     // hàm currying funtion trả về 1 cái hàm khác
     // cách viết tắt bỏ return
     const handelFormValue = (name) => (e) => {
-        setFormValue({ 
+        setFormValue({
             ...formValue,
             [name]: e.target.value,
         })
     }
 
     return (
-        // ở đây đặt là form, button đặt trong form nếu ko có type thì mặc định là submit
-        // button có type là submit thì khi click vào sẽ chạy vào hàm onSubmit của form
-        <form>
-            <div className="row">
-                <h2 className='p-3 bg-dark text-white'>Thông tin sinh viên</h2>
-                <div className='col-6'>
-                    <div className='mt-3'>
-                        <label htmlFor="">Mã sinh viên</label>
-                        <input type="text" name="" id="" className="form-control"
-                            onChange={handelFormValue("id")}
-                        />
-                    </div>
-                    <div className='mt-3'>
-                        <label htmlFor="">Số điện thoại</label>
-                        <input type="number" name="" id="" className="form-control"
-                            onChange={handelFormValue("phone")}
-                        />
-                    </div>
+        // ở đây đặt là form, button đặt trong form nếu ko có type thì mặc định là submit.
+        // button có type là submit thì khi click vào sẽ chạy vào hàm onSubmit của form.
+        <form className="row" id="btForm"
+            // tạo hàm onSubmit để khi click vào button nó sẽ chạy vào đây.
+            // trong onSubmit này phải ngăn sự kiện reload của browser vì tính chất của <form> là sẽ bĩ reload lại mội khi ấn nút gì đó trong <form> mà ko có type.
+            // cụ thể trong bài này là nút "Create".
+            onSubmit={(event) => {
+                // console.log('event: ', event);
+                // ngăn sự kiện reload của browser khi submit
+                event.preventDefault()
+            }}
+        >
+            <h2 className='p-3 bg-dark text-white'>Thông tin sinh viên</h2>
+            <div className='col-6'>
+                <div className='mt-3'>
+                    <label htmlFor="">Mã sinh viên</label>
+                    <input type="text" name="" id="" className="form-control"
+                        onChange={handelFormValue("id")}
+                    />
                 </div>
-                <div className='col-6'>
-                    <div className='mt-3'>
-                        <label htmlFor="">Họ tên</label>
-                        <input type="text" name="" id="" className="form-control"
-                            onChange={handelFormValue("name")}
-                        />
-                    </div>
-                    <div className='mt-3'>
-                        <label htmlFor="">Email</label>
-                        <input type="email" name="" id="" className="form-control"
-                            onChange={handelFormValue("mail")}
-                        />
-                    </div>
+                <div className='mt-3'>
+                    <label htmlFor="">Số điện thoại</label>
+                    <input type="tel" name="" id="" className="form-control"
+                        onChange={handelFormValue("phone")}
+                    />
                 </div>
             </div>
+            <div className='col-6'>
+                <div className='mt-3'>
+                    <label htmlFor="">Họ tên</label>
+                    <input type="text" name="" id="" className="form-control"
+                        onChange={handelFormValue("name")}
+                    />
+                </div>
+                <div className='mt-3'>
+                    <label htmlFor="">Email</label>
+                    <input type="email" name="" id="" className="form-control"
+                        onChange={handelFormValue("mail")}
+                    />
+                </div>
+            </div>
+
             <div className='mt-3'>
                 <button className='btn btn-primary'
                     onClick={() => {
@@ -84,5 +92,6 @@ export const ProductForm = () => {
                 </button>
             </div>
         </form>
+
     )
 }
