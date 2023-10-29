@@ -11,9 +11,12 @@ const BTFormSlice = createSlice({
         addProduct: (state, action) => {
             const stateProductList = state.productList;
             const { payload } = action;
-            // console.log('payload: ', payload);
             stateProductList.push(payload);
-            console.log('stateProductList: ', stateProductList);
+        },
+        deleteProduct: (state, action) => {
+            const { payload } = action;
+            // payload ở delete chính là id luôn
+            state.productList = state.productList.filter((value) => value.id !== payload);
         }
     }
 })
