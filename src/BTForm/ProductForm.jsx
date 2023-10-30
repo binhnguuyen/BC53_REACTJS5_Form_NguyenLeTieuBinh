@@ -26,6 +26,47 @@ export const ProductForm = () => {
         mail: "",
     })
 
+    // tạo hàm validate có 2 tham số là name(id, name, phone, mai) và value(giá trị trong ô input)
+    const validate = (name, value) => {
+        switch (name) {
+            case "id":
+                if (value == "") {
+                    return "Vui lòng nhập thông tin"
+                }
+                else {
+                    return "";
+                }
+            case "name":
+                // xài return rồi ko cần dùng break nữa
+                if (value.trim() === "") {
+                    return "Vui lòng nhập thông tin"
+                }
+                else {
+                    return "";
+                }
+            case "mail":
+                // xài return rồi ko cần dùng break nữa
+                if (value.trim() === "") {
+                    return "Vui lòng nhập thông tin"
+                }
+                else {
+                    return "";
+                }
+            case "phone":
+                // xài return rồi ko cần dùng break nữa
+                if (value.trim() === "") {
+                    return "Vui lòng nhập thông tin"
+                }
+                else {
+                    return "";
+                }
+
+            default:
+                return "";
+
+        }
+    }
+
     // để lấy dữ liệu trên ô input cần thêm onChange.
     // mỗi sự kiện trong JS đề trả về 1 biến event.
     // const handelFormValue = (e, name) => {
@@ -44,9 +85,8 @@ export const ProductForm = () => {
     const handelFormValue = (name) => (e) => {
         // kiểm tra dữ liệu đầu vào
         // name ở đây là: id, name, phone, mail
-        if ( e.target.value === "" ) {
-            setFormError({...formError, [name]: "Vui lòng nhập thông tin"})
-        }
+        // các đk xét lỗi mình tạo trong hàm validate dựa vào nội dung bên trong ô input chính là tham số e.target.value
+        setFormError({ ...formError, [name]: validate(name, e.target.value) })
 
         // kiểm tra xong rồi thì setForm
         setFormValue({
