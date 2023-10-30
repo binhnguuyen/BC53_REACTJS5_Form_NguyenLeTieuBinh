@@ -30,14 +30,15 @@ export const ProductForm = () => {
     const validate = (name, value) => {
         switch (name) {
             case "id":
+                // .trim() để bỏ hết các ký tự space (rỗng) ra
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
                 else {
                     return "";
                 }
-            case "name":
                 // xài return rồi ko cần dùng break nữa
+            case "name":
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
@@ -48,7 +49,6 @@ export const ProductForm = () => {
                     return "";
                 }
             case "mail":
-                // xài return rồi ko cần dùng break nữa
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
@@ -59,7 +59,6 @@ export const ProductForm = () => {
                     return "";
                 }
             case "phone":
-                // xài return rồi ko cần dùng break nữa
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
@@ -69,7 +68,6 @@ export const ProductForm = () => {
                 else {
                     return "";
                 }
-
             default:
                 return "";
 
