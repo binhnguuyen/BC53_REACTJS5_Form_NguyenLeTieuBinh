@@ -169,12 +169,12 @@ export const ProductForm = () => {
                 }
 
                 // setFormValue lại để làm trống các ô input sau khi thêm sp
-                // setFormValue({
-                //     id: "",
-                //     name: "",
-                //     phone: "",
-                //     mail: "",
-                // })
+                setFormValue({
+                    id: "",
+                    name: "",
+                    phone: "",
+                    mail: "",
+                })
             }}
         >
             <h2 className='p-3 bg-dark text-white'>Thông tin sinh viên</h2>
