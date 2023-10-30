@@ -129,6 +129,33 @@ export const ProductForm = () => {
                 // ngăn sự kiện reload của browser khi submit
                 event.preventDefault()
 
+                // Validate khi ấn sau khi ấn nút Create và cũng phải setState để render lỗi ra UI cho user biết
+                // nên phải biến nó thành 1 cái obj mới
+                // thằng Object.keys này giúp mình biến những cái key và gom chung về 1 mảng
+                // tạo 1 obj rỗng để xét state
+                const validationError = {};
+                Object.keys(formValue).forEach((key) => {
+                    // key: id, name, phone, mail
+                    const err = validate(key, formValue[key]);
+                    // gán nội dung err vào obj rỗng đã định nghĩa phía trên
+                    // QUAN TRỌNG: đây là cách thêm các key cho 1 object (comment bên dưới)
+                    // do lúc đầu nó chưa có key, làm thế này nó sẽ đc thêm key
+                    validationError[key] = err;
+                })
+
+                /*
+                 * a = {name: "A"}
+                 * b = {...a, age: 12} // {name: "A", age: 12}
+                 * b[gender] = "Name"  // {name: "A", age: 12, gender: "Nam"}
+                 */
+
+                // nếu có lỗi thì mình clone lại và setFormError để nó re-render lại ra UI
+                if (Object.keys(validationError).length > 0) {
+                    setFormError({ ...validationError });
+                    return;
+                }
+
+
                 // do mình ko có type trong các button nên sẽ chạy vào trong onSubmit này và chạy tính năng của mình
                 if (productEdit) {
                     dispatch(btFormActions.updateProduct(formValue))
@@ -138,12 +165,12 @@ export const ProductForm = () => {
                 }
 
                 // setFormValue lại để làm trống các ô input sau khi thêm sp
-                setFormValue({
-                    id: "",
-                    name: "",
-                    phone: "",
-                    mail: "",
-                })
+                // setFormValue({
+                //     id: "",
+                //     name: "",
+                //     phone: "",
+                //     mail: "",
+                // })
             }}
         >
             <h2 className='p-3 bg-dark text-white'>Thông tin sinh viên</h2>
