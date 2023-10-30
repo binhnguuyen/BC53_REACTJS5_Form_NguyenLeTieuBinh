@@ -30,7 +30,7 @@ export const ProductForm = () => {
     const validate = (name, value) => {
         switch (name) {
             case "id":
-                if (value == "") {
+                if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
                 else {
@@ -41,6 +41,9 @@ export const ProductForm = () => {
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
+                else if (!value.match(new RegExp("^[A-Za-z]+$"))) {
+                    return "Vui lòng chỉ nhập ký tự"
+                }
                 else {
                     return "";
                 }
@@ -49,6 +52,9 @@ export const ProductForm = () => {
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
+                else if (!value.match(new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))) {
+                    return "Email không hợp lệ"
+                }
                 else {
                     return "";
                 }
@@ -56,6 +62,9 @@ export const ProductForm = () => {
                 // xài return rồi ko cần dùng break nữa
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
+                }
+                else if (!value.match(new RegExp("^[0-9]*$"))) {
+                    return "Số điện thoại không hợp lệ"
                 }
                 else {
                     return "";
