@@ -140,7 +140,11 @@ export const ProductForm = () => {
                     // gán nội dung err vào obj rỗng đã định nghĩa phía trên
                     // QUAN TRỌNG: đây là cách thêm các key cho 1 object (comment bên dưới)
                     // do lúc đầu nó chưa có key, làm thế này nó sẽ đc thêm key
-                    validationError[key] = err;
+                    // nếu có error
+                    if (err && err.length > 0) {
+                        // biến mảng error thành obj
+                        validationError[key] = err;
+                    }
                 })
 
                 /*
