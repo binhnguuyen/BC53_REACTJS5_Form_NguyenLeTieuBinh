@@ -42,7 +42,7 @@ export const ProductForm = () => {
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
-                else if (!value.match(new RegExp("^[A-Za-z]+$"))) {
+                else if (!value.trim().match(new RegExp("[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔƠÙÚĂĐàáâãèéêìíòóôơùúăđĨĩỨứỪừỬửỰựỞờỈỉỬửỦủỨứỄỂẰằẮắẶặẲẳẴẵỔổỞởỢợỚớỒồỘộỐốỖỗỈỉỊịỮữỷÝỲỵỴỸỹ]"))) {
                     return "Vui lòng chỉ nhập ký tự"
                 }
                 else {
