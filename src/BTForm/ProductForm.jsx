@@ -260,8 +260,8 @@ export const ProductForm = () => {
                         </button>)
                 }
             </div>
-            <div className='mt-3 col-12'>
-                <h1 htmlFor="">Tìm kiếm tên sinh viên</h1>
+            <div className='mt-3'>
+                <h3 htmlFor="">Tìm kiếm tên sinh viên</h3>
                 <div className='row d-flex justify-content-left'>
                     <div className='col-5'>
                         <input type="text" className='' placeholder='Ví dụ: Nguyễn Văn A'
@@ -276,18 +276,18 @@ export const ProductForm = () => {
                         />
                     </div>
                     <div className='col-1'>
-                        <i className="fa fa-search ms-2 d-flex"
+                        <button className="btn btn-success fa fa-search ms-2 d-flex"
+                            on
                             style={{
                                 border: "solid 1px #000",
                                 borderRadius: 5,
-                                backgroundColor: "grey",
                                 width: 50,
                                 height: 30,
                                 cursor: "pointer",
                                 justifyContent: "center",
                                 alignItems: "center",
                             }}
-                        ></i>
+                        ></button>
                     </div>
                 </div>
 
