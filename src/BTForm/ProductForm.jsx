@@ -37,7 +37,7 @@ export const ProductForm = () => {
                 else {
                     return "";
                 }
-                // xài return rồi ko cần dùng break nữa
+            // xài return rồi ko cần dùng break nữa
             case "name":
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
@@ -259,6 +259,39 @@ export const ProductForm = () => {
                             Create
                         </button>)
                 }
+            </div>
+            <div className='mt-3 col-12'>
+                <h1 htmlFor="">Tìm kiếm tên sinh viên</h1>
+                <div className='row d-flex justify-content-left'>
+                    <div className='col-5'>
+                        <input type="text" className='' placeholder='Ví dụ: Nguyễn Văn A'
+                            style={{
+                                width: "100%",
+                                height: 30,
+                                alignItems: "center",
+                                lineHeight: 30,
+                                border: "solid 1px #000",
+                                borderRadius: 5,
+                            }}
+                        />
+                    </div>
+                    <div className='col-1'>
+                        <i className="fa fa-search ms-2 d-flex"
+                            style={{
+                                border: "solid 1px #000",
+                                borderRadius: 5,
+                                backgroundColor: "grey",
+                                width: 50,
+                                height: 30,
+                                cursor: "pointer",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        ></i>
+                    </div>
+                </div>
+
+
             </div>
         </form>
 
