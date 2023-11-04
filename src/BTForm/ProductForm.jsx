@@ -16,7 +16,63 @@ export const ProductForm = () => {
         phone: "",
         mail: "",
     })
-    console.log('formValue: ', formValue);
+    // console.log('formValue: ', formValue);
+
+    // tạo 1 state mới quản lý validation
+    const [formError, setFormError] = useState({
+        id: "",
+        name: "",
+        phone: "",
+        mail: "",
+    })
+
+    // tạo hàm validate có 2 tham số là name(id, name, phone, mai) và value(giá trị trong ô input)
+    const validate = (name, value) => {
+        switch (name) {
+            case "id":
+                // .trim() để bỏ hết các ký tự space (rỗng) ra
+                if (value.trim() === "") {
+                    return "Vui lòng nhập thông tin"
+                }
+                else {
+                    return "";
+                }
+                // xài return rồi ko cần dùng break nữa
+            case "name":
+                if (value.trim() === "") {
+                    return "Vui lòng nhập thông tin"
+                }
+                else if (!value.trim().match(new RegExp("[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔƠÙÚĂĐàáâãèéêìíòóôơùúăđĨĩỨứỪừỬửỰựỞờỈỉỬửỦủỨứỄỂẰằẮắẶặẲẳẴẵỔổỞởỢợỚớỒồỘộỐốỖỗỈỉỊịỮữỷÝỲỵỴỸỹ]"))) {
+                    return "Vui lòng chỉ nhập ký tự"
+                }
+                else {
+                    return "";
+                }
+            case "mail":
+                if (value.trim() === "") {
+                    return "Vui lòng nhập thông tin"
+                }
+                else if (!value.match(new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))) {
+                    return "Email không hợp lệ"
+                }
+                else {
+                    return "";
+                }
+            case "phone":
+                if (value.trim() === "") {
+                    return "Vui lòng nhập thông tin"
+                }
+                else if (!value.match(new RegExp("^[0-9]*$"))) {
+                    return "Số điện thoại không hợp lệ"
+                }
+                else {
+                    return "";
+                }
+            default:
+                return "";
+
+        }
+    }
 
     // để lấy dữ liệu trên ô input cần thêm onChange.
     // mỗi sự kiện trong JS đề trả về 1 biến event.
@@ -34,6 +90,12 @@ export const ProductForm = () => {
     // hàm currying funtion trả về 1 cái hàm khác
     // cách viết tắt bỏ return
     const handelFormValue = (name) => (e) => {
+        // kiểm tra dữ liệu đầu vào
+        // name ở đây là: id, name, phone, mail
+        // các đk xét lỗi mình tạo trong hàm validate dựa vào nội dung bên trong ô input chính là tham số e.target.value
+        setFormError({ ...formError, [name]: validate(name, e.target.value) })
+
+        // kiểm tra xong rồi thì setForm
         setFormValue({
             ...formValue,
             [name]: e.target.value,
@@ -64,6 +126,37 @@ export const ProductForm = () => {
                 // console.log('event: ', event);
                 // ngăn sự kiện reload của browser khi submit
                 event.preventDefault()
+
+                // Validate khi ấn sau khi ấn nút Create và cũng phải setState để render lỗi ra UI cho user biết
+                // nên phải biến nó thành 1 cái obj mới
+                // thằng Object.keys này giúp mình biến những cái key và gom chung về 1 mảng
+                // tạo 1 obj rỗng để xét state
+                const validationError = {};
+                Object.keys(formValue).forEach((key) => {
+                    // key: id, name, phone, mail
+                    const err = validate(key, formValue[key]);
+                    // gán nội dung err vào obj rỗng đã định nghĩa phía trên
+                    // QUAN TRỌNG: đây là cách thêm các key cho 1 object (comment bên dưới)
+                    // do lúc đầu nó chưa có key, làm thế này nó sẽ đc thêm key
+                    // nếu có error
+                    if (err && err.length > 0) {
+                        // biến mảng error thành obj
+                        validationError[key] = err;
+                    }
+                })
+
+                /*
+                 * a = {name: "A"}
+                 * b = {...a, age: 12} // {name: "A", age: 12}
+                 * b[gender] = "Name"  // {name: "A", age: 12, gender: "Nam"}
+                 */
+
+                // nếu có lỗi thì mình clone lại và setFormError để nó re-render lại ra UI
+                if (Object.keys(validationError).length > 0) {
+                    setFormError({ ...validationError });
+                    return;
+                }
+
 
                 // do mình ko có type trong các button nên sẽ chạy vào trong onSubmit này và chạy tính năng của mình
                 if (productEdit) {
@@ -96,6 +189,13 @@ export const ProductForm = () => {
                         // ko cho sửa id nên mình so sánh nếu bằng thì disable
                         disabled={productEdit?.id && formValue.id === productEdit?.id}
                     />
+                    {formError.id && (
+                        <p>
+                            <small className='text-danger'>{formError.id}</small>
+                        </p>
+                    )
+                    }
+
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Số điện thoại</label>
@@ -104,6 +204,12 @@ export const ProductForm = () => {
                         // value={productEdit?.phone}
                         value={formValue.phone}
                     />
+                    {formError.phone && (
+                        <p>
+                            <small className='text-danger'>{formError.phone}</small>
+                        </p>
+                    )}
+
                 </div>
             </div>
             <div className='col-6'>
@@ -114,6 +220,12 @@ export const ProductForm = () => {
                         // value={productEdit?.name}
                         value={formValue.name}
                     />
+                    {formError.name && (
+                        <p>
+                            <small className='text-danger'>{formError.name}</small>
+                        </p>
+                    )}
+
                 </div>
                 <div className='mt-3'>
                     <label htmlFor="">Email</label>
@@ -122,6 +234,11 @@ export const ProductForm = () => {
                         // value={productEdit?.mail}
                         value={formValue.mail}
                     />
+                    {formError.mail && (
+                        <p>
+                            <small className='text-danger'>{formError.mail}</small>
+                        </p>
+                    )}
                 </div>
             </div>
 
