@@ -5,9 +5,8 @@ import { btFormActions } from '../store/BTForm/slice';
 export const ProductForm = () => {
     const dispatch = useDispatch();
 
-    // lấy productEdit từ store về
-    const { productEdit } = useSelector(state => state.btForm)
-    console.log('productEdit: ', productEdit);
+    // lấy studentEdit từ store về
+    const { studentEdit, searchResult } = useSelector(state => state.btForm)
 
     // lấy dữ liệu từ form về thì đặt state
     const [formValue, setFormValue] = useState({
@@ -25,6 +24,7 @@ export const ProductForm = () => {
         phone: "",
         mail: "",
     })
+
 
     // tạo hàm validate có 2 tham số là name(id, name, phone, mai) và value(giá trị trong ô input)
     const validate = (name, value) => {
@@ -102,18 +102,23 @@ export const ProductForm = () => {
         })
     }
 
+    const handleSearchValue = () => (e) => {
+        dispatch(btFormActions.search(e.target.value));
+    }
+    console.log("searchResult", searchResult);
+
 
     // useEffect cũng là 1 hook của React giống như useState
-    // cứ mỗi lần productEdit thay đổi thì callback serFromValue sẽ chạy lại (TH3 trong demo)
-    // dùng useEffect ngay đây sẽ giúp sữa lỗi dù mình có sửa giá trị của productEdit đc render ra UI thì giá trị render ra UI cũng ko bị thay đổi
+    // cứ mỗi lần studentEdit thay đổi thì callback serFromValue sẽ chạy lại (TH3 trong demo)
+    // dùng useEffect ngay đây sẽ giúp sữa lỗi dù mình có sửa giá trị của studentEdit đc render ra UI thì giá trị render ra UI cũng ko bị thay đổi
     useEffect(() => {
         // do lần đầu render nó vẫn chạy, nên mình cần xét if ngay đây để xem nó có ko
-        if (productEdit) {
-            // console.log('productEdit: ', productEdit);
-            // set form trên UI lại mỗi khi productEdit thay đổi
-            setFormValue(productEdit)
+        if (studentEdit) {
+            // console.log('studentEdit: ', studentEdit);
+            // set form trên UI lại mỗi khi studentEdit thay đổi
+            setFormValue(studentEdit)
         }
-    }, [productEdit])
+    }, [studentEdit])
 
     return (
         // ở đây đặt là form, button đặt trong form nếu ko có type thì mặc định là submit.
@@ -159,11 +164,11 @@ export const ProductForm = () => {
 
 
                 // do mình ko có type trong các button nên sẽ chạy vào trong onSubmit này và chạy tính năng của mình
-                if (productEdit) {
-                    dispatch(btFormActions.updateProduct(formValue))
+                if (studentEdit) {
+                    dispatch(btFormActions.update(formValue))
                 }
                 else {
-                    dispatch(btFormActions.addProduct(formValue))
+                    dispatch(btFormActions.add(formValue))
                 }
 
                 // setFormValue lại để làm trống các ô input sau khi thêm sp
@@ -181,13 +186,13 @@ export const ProductForm = () => {
                     <label htmlFor="">Mã sinh viên</label>
                     <input type="text" name="" id="" className="form-control"
                         onChange={handelFormValue("id")}
-                        // gán giá trị của productEdit khi ấn nút edit
+                        // gán giá trị của studentEdit khi ấn nút edit
                         // dấu ? là do ban đầu khi chưa ấn edit nó sẽ là undefined, cứ vậy mà chấm tới thuộc tính nó sẽ lỗi
-                        // value={productEdit?.id}
-                        // do mình đã useEffect ở trên rồi nên ngay đây mình sẽ ko lấy giá trị từ productEdit nữa mà lấy trực tiếp từ formValue, vì mình sửa là sửa giá trị trong ô input của formValue chứ ko phải giá trị của productEdit
+                        // value={studentEdit?.id}
+                        // do mình đã useEffect ở trên rồi nên ngay đây mình sẽ ko lấy giá trị từ studentEdit nữa mà lấy trực tiếp từ formValue, vì mình sửa là sửa giá trị trong ô input của formValue chứ ko phải giá trị của studentEdit
                         value={formValue.id}
                         // ko cho sửa id nên mình so sánh nếu bằng thì disable
-                        disabled={productEdit?.id && formValue.id === productEdit?.id}
+                        disabled={studentEdit?.id && formValue.id === studentEdit?.id}
                     />
                     {formError.id && (
                         <p>
@@ -201,7 +206,7 @@ export const ProductForm = () => {
                     <label htmlFor="">Số điện thoại</label>
                     <input type="tel" name="" id="" className="form-control"
                         onChange={handelFormValue("phone")}
-                        // value={productEdit?.phone}
+                        // value={studentEdit?.phone}
                         value={formValue.phone}
                     />
                     {formError.phone && (
@@ -217,7 +222,7 @@ export const ProductForm = () => {
                     <label htmlFor="">Họ tên</label>
                     <input type="text" name="" id="" className="form-control"
                         onChange={handelFormValue("name")}
-                        // value={productEdit?.name}
+                        // value={studentEdit?.name}
                         value={formValue.name}
                     />
                     {formError.name && (
@@ -231,7 +236,7 @@ export const ProductForm = () => {
                     <label htmlFor="">Email</label>
                     <input type="email" name="" id="" className="form-control"
                         onChange={handelFormValue("mail")}
-                        // value={productEdit?.mail}
+                        // value={studentEdit?.mail}
                         value={formValue.mail}
                     />
                     {formError.mail && (
@@ -243,17 +248,17 @@ export const ProductForm = () => {
             </div>
 
             <div className='mt-3'>
-                {/* chỗ này muốn là nếu có giá trị productEdit thì chỉ hiển thị nút Update */}
+                {/* chỗ này muốn là nếu có giá trị studentEdit thì chỉ hiển thị nút Update */}
                 {/* nếu ko có thì hiện nút Create */}
                 {
-                    productEdit ?
+                    studentEdit ?
                         (<button className='btn btn-success'>
                             Update
                         </button>)
                         :
                         (<button className='btn btn-primary'
                         // onClick={() => {
-                        //     dispatch(btFormActions.addProduct(formValue))
+                        //     dispatch(btFormActions.add(formValue))
                         // }}
                         >
                             Create
@@ -264,7 +269,7 @@ export const ProductForm = () => {
                 <h3 htmlFor="">Tìm kiếm tên sinh viên</h3>
                 <div className='row d-flex justify-content-left'>
                     <div className='col-5'>
-                        <input type="text" className='' placeholder='Ví dụ: Nguyễn Văn A'
+                        <input id='searchValue' type="text" className='form-control' placeholder='Ví dụ: Nguyễn Văn A'
                             style={{
                                 width: "100%",
                                 height: 30,
@@ -273,11 +278,11 @@ export const ProductForm = () => {
                                 border: "solid 1px #000",
                                 borderRadius: 5,
                             }}
+                            onChange={handleSearchValue()}
                         />
                     </div>
                     <div className='col-1'>
                         <button className="btn btn-success fa fa-search ms-2 d-flex"
-                            on
                             style={{
                                 border: "solid 1px #000",
                                 borderRadius: 5,
@@ -288,6 +293,60 @@ export const ProductForm = () => {
                                 alignItems: "center",
                             }}
                         ></button>
+                    </div>
+                    <div className='row mt-2'>
+                        {
+                            searchResult ?
+                                (
+                                    <div>
+                                        <h5 className='text-success'>Kết quả tìm kiếm</h5>
+                                        <table className='col-12'>
+                                            <thead>
+                                                <td style={{
+                                                    width: "25%"
+                                                }}>Mã sinh viên</td>
+                                                <td style={{
+                                                    width: "25%"
+                                                }}>Họ tên</td>
+                                                <td style={{
+                                                    width: "25%"
+                                                }}>Số điện thoại</td>
+                                                <td>Email</td>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    <span></span>
+                                )
+                        }
+                        {
+                            searchResult ?
+                                (searchResult.map((student) => (
+                                    <div key={student.id}>
+                                        <table className='col-12'>
+                                            <thead></thead>
+                                            <tbody>
+                                                <td style={{
+                                                    width: "25%",
+                                                }}>{student.id}</td>
+                                                <td style={{
+                                                    width: "25%"
+                                                }}>{student.name}</td>
+                                                <td style={{
+                                                    width: "25%"
+                                                }}>{student.phone}</td>
+                                                <td>{student.mail}</td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ))
+                                ) : (
+                                    <span></span>
+                                )
+                        }
                     </div>
                 </div>
 

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { btFormActions } from '../store/BTForm/slice'
 
 export const ProductTable = () => {
-    const { productList } = useSelector(state => state.btForm)
-    // console.log('productList: ', productList);
+    const { studentList } = useSelector(state => state.btForm)
+    // console.log('studentList: ', studentList);
 
     // Thêm dispatch
     const dispatch = useDispatch()
@@ -24,7 +24,7 @@ export const ProductTable = () => {
             </thead>
             <tbody>
                 {
-                    productList.map( (product) => {
+                    studentList.map( (product) => {
                         return (
                             <tr key={product.id}>
                                 <td>{product.id}</td>
@@ -35,7 +35,7 @@ export const ProductTable = () => {
                                     <button className='btn btn-warning'
                                         onClick={() => {
                                             // delete thì chỉ cần đưa cái id lên store là OK
-                                            dispatch(btFormActions.editProduct(product))
+                                            dispatch(btFormActions.edit(product))
                                         }}
                                     >
                                         <i className="fa fa-edit"></i>
@@ -43,7 +43,7 @@ export const ProductTable = () => {
                                     <button className='btn btn-danger ms-3'
                                         onClick={() => {
                                             // delete thì chỉ cần đưa cái id lên store là OK
-                                            dispatch(btFormActions.deleteProduct(product.id))
+                                            dispatch(btFormActions.delete(product.id))
                                         }}
                                     >
                                         <i className="fa fa-trash-alt"></i>
