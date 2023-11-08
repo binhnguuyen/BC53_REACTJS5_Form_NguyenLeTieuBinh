@@ -7,7 +7,6 @@ export const ProductForm = () => {
 
     // lấy studentEdit từ store về
     const { studentEdit, searchResult } = useSelector(state => state.btForm)
-
     // lấy dữ liệu từ form về thì đặt state
     const [formValue, setFormValue] = useState({
         id: "",
@@ -24,6 +23,9 @@ export const ProductForm = () => {
         phone: "",
         mail: "",
     })
+
+    // tạo 1 state mới quản lý ô giá trị tìm kiếm
+    const [searchValue, setSearchValue] = useState("");
 
 
     // tạo hàm validate có 2 tham số là name(id, name, phone, mai) và value(giá trị trong ô input)
@@ -93,6 +95,7 @@ export const ProductForm = () => {
         // kiểm tra dữ liệu đầu vào
         // name ở đây là: id, name, phone, mail
         // các đk xét lỗi mình tạo trong hàm validate dựa vào nội dung bên trong ô input chính là tham số e.target.value
+        // trong HTML phía dưới phải có value = {} thì ở đây mới lấy ra đc
         setFormError({ ...formError, [name]: validate(name, e.target.value) })
 
         // kiểm tra xong rồi thì setForm
@@ -102,10 +105,13 @@ export const ProductForm = () => {
         })
     }
 
-    const handleSearchValue = () => (e) => {
-        dispatch(btFormActions.search(e.target.value));
+    const handleInputValue = (e) => {
+        let {value} = e.target;
+        setSearchValue(value);
     }
-    console.log("searchResult", searchResult);
+    const handleSearchValue = () => {
+        dispatch(btFormActions.search(searchValue))
+    }
 
 
     // useEffect cũng là 1 hook của React giống như useState
@@ -119,6 +125,13 @@ export const ProductForm = () => {
             setFormValue(studentEdit)
         }
     }, [studentEdit])
+
+    // useEffect(() => {
+    //     if (searchResult) {
+    //         // console.log('searchResult: ', searchResult);
+    //         // setSearchValue(searchResult)
+    //     }
+    // }, [searchResult])
 
     return (
         // ở đây đặt là form, button đặt trong form nếu ko có type thì mặc định là submit.
@@ -269,7 +282,7 @@ export const ProductForm = () => {
                 <h3 htmlFor="">Tìm kiếm tên sinh viên</h3>
                 <div className='row d-flex justify-content-left'>
                     <div className='col-5'>
-                        <input id='searchValue' type="text" className='form-control' placeholder='Ví dụ: Nguyễn Văn A'
+                        <input id='' type="text" className='form-control' placeholder='Ví dụ: Nguyễn Văn A'
                             style={{
                                 width: "100%",
                                 height: 30,
@@ -278,11 +291,14 @@ export const ProductForm = () => {
                                 border: "solid 1px #000",
                                 borderRadius: 5,
                             }}
-                            onChange={handleSearchValue()}
+                            // value ngay đây phải đưa vào nếu ko event.target.value sẽ bị undefined
+                            value={searchValue}
+                            // ngay đây dùng onInput={} cũng đc
+                            onChange={handleInputValue}
                         />
                     </div>
                     <div className='col-1'>
-                        <button className="btn btn-success fa fa-search ms-2 d-flex"
+                        <button type='button' className="btn btn-success fa fa-search ms-2 d-flex"
                             style={{
                                 border: "solid 1px #000",
                                 borderRadius: 5,
@@ -292,6 +308,7 @@ export const ProductForm = () => {
                                 justifyContent: "center",
                                 alignItems: "center",
                             }}
+                            onClick={handleSearchValue}
                         ></button>
                     </div>
                     <div className='row mt-2'>

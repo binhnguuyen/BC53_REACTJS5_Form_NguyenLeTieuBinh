@@ -46,7 +46,7 @@ const BTFormSlice = createSlice({
         },
         update: (state, action) => {
             const { payload } = action;
-            // console.log('payload: ', payload);
+            // 
 
             // tìm trong studentList thằng nào có id giống id của studentEdit vừa truyền lên
             const productIndex = state.studentList.findIndex((item) => item.id === payload.id);
@@ -63,8 +63,6 @@ const BTFormSlice = createSlice({
         },
         search: (state, { payload }) => {
             state.searchResult = payload.trim()?.toLocaleLowerCase();
-            console.log('state.searchResult: ', state.searchResult);
-
             const result = state.studentList.filter((item) => {
                 if ( state.searchResult !== "" ) {
                     return (
