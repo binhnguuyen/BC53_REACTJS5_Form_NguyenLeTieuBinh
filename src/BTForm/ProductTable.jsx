@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { btFormActions } from '../store/BTForm/slice'
 
 export const ProductTable = () => {
-    const { studentList } = useSelector(state => state.btForm)
+    const { studentList, searchResult } = useSelector(state => state.btForm)
     // console.log('studentList: ', studentList);
 
     // Thêm dispatch
@@ -23,35 +23,52 @@ export const ProductTable = () => {
                 </tr>
             </thead>
             <tbody>
-                {
-                    studentList.map( (product) => {
-                        return (
-                            <tr key={product.id}>
-                                <td>{product.id}</td>
-                                <td>{product.name}</td>
-                                <td>{product.phone}</td>
-                                <td>{product.mail}</td>
-                                <td>
-                                    <button className='btn btn-warning'
-                                        onClick={() => {
-                                            // delete thì chỉ cần đưa cái id lên store là OK
-                                            dispatch(btFormActions.edit(product))
-                                        }}
-                                    >
-                                        <i className="fa fa-edit"></i>
-                                    </button>
-                                    <button className='btn btn-danger ms-3'
-                                        onClick={() => {
-                                            // delete thì chỉ cần đưa cái id lên store là OK
-                                            dispatch(btFormActions.delete(product.id))
-                                        }}
-                                    >
-                                        <i className="fa fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        )
-                    })
+                {   
+                    searchResult.length?
+                    (  
+                        searchResult.map( (student) => {
+                            return (
+                                <tr key={student.id}>
+                                    <td>{student.id}</td>
+                                    <td>{student.name}</td>
+                                    <td>{student.phone}</td>
+                                    <td>{student.mail}</td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    ) : (
+                        studentList.map( (student) => {
+                            return (
+                                <tr key={student.id}>
+                                    <td>{student.id}</td>
+                                    <td>{student.name}</td>
+                                    <td>{student.phone}</td>
+                                    <td>{student.mail}</td>
+                                    <td>
+                                        <button className='btn btn-warning'
+                                            onClick={() => {
+                                                // delete thì chỉ cần đưa cái id lên store là OK
+                                                dispatch(btFormActions.edit(student))
+                                            }}
+                                        >
+                                            <i className="fa fa-edit"></i>
+                                        </button>
+                                        <button className='btn btn-danger ms-3'
+                                            onClick={() => {
+                                                // delete thì chỉ cần đưa cái id lên store là OK
+                                                dispatch(btFormActions.delete(student.id))
+                                            }}
+                                        >
+                                            <i className="fa fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    )
+                    
                 }
             </tbody>
         </table>

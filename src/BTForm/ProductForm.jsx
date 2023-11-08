@@ -311,7 +311,7 @@ export const ProductForm = () => {
                             onClick={handleSearchValue}
                         ></button>
                     </div>
-                    <div className='row mt-2'>
+                    {/* <div className='row mt-2'>
                         {
                             searchResult ?
                                 (
@@ -364,7 +364,7 @@ export const ProductForm = () => {
                                     <span></span>
                                 )
                         }
-                    </div>
+                    </div> */}
                 </div>
 
 
