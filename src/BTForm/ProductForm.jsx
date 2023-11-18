@@ -6,7 +6,7 @@ export const ProductForm = () => {
     const dispatch = useDispatch();
 
     // lấy studentEdit từ store về
-    const { studentEdit, searchResult } = useSelector(state => state.btForm)
+    const { studentEdit, studentList } = useSelector(state => state.btForm)
     // lấy dữ liệu từ form về thì đặt state
     const [formValue, setFormValue] = useState({
         id: "",
@@ -32,12 +32,26 @@ export const ProductForm = () => {
     const validate = (name, value) => {
         switch (name) {
             case "id":
+                let havedID = 0;
                 // .trim() để bỏ hết các ký tự space (rỗng) ra
                 if (value.trim() === "") {
                     return "Vui lòng nhập thông tin"
                 }
                 else {
-                    return "";
+                    studentList.forEach((item) => {
+                        if ( item.id === value ) {
+                            havedID = 1;
+                        }
+                        else {
+                            // do nothing
+                        }
+                    })
+                    if ( !havedID ) {
+                        return ""
+                    }
+                    else {
+                        return "ID đã tồn tại, vui lòng nhập ID khác"
+                    }
                 }
             // xài return rồi ko cần dùng break nữa
             case "name":
@@ -106,7 +120,7 @@ export const ProductForm = () => {
     }
 
     const handleInputValue = (e) => {
-        let {value} = e.target;
+        let { value } = e.target;
         setSearchValue(value);
     }
     const handleSearchValue = () => {
@@ -177,11 +191,27 @@ export const ProductForm = () => {
 
 
                 // do mình ko có type trong các button nên sẽ chạy vào trong onSubmit này và chạy tính năng của mình
+                let havedID = 0;
                 if (studentEdit) {
                     dispatch(btFormActions.update(formValue))
                 }
                 else {
-                    dispatch(btFormActions.add(formValue))
+                    studentList.forEach((item) => {
+                        if ( item.id === formValue.id ) {
+                            havedID = 1;
+                        }
+                        else {
+                            // do nothing
+                        }
+                    })
+                    console.log('havedID: ', havedID);
+
+                    if ( !havedID ) {
+                        dispatch(btFormActions.add(formValue))
+                    }
+                    else {
+                        alert("ID đã tồn tại, vui lòng nhập ID khác")
+                    }
                 }
 
                 // setFormValue lại để làm trống các ô input sau khi thêm sp
