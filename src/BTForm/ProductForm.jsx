@@ -38,14 +38,16 @@ export const ProductForm = () => {
                     return "Vui lòng nhập thông tin"
                 }
                 else {
-                    studentList.forEach((item) => {
-                        if ( item.id === value ) {
-                            havedID = 1;
-                        }
-                        else {
-                            // do nothing
-                        }
-                    })
+                    if (!studentEdit) {
+                        studentList.forEach((item) => {
+                            if ( item.id === value ) {
+                                havedID = 1;
+                            }
+                            else {
+                                // do nothing
+                            }
+                        })
+                    }
                     if ( !havedID ) {
                         return ""
                     }
